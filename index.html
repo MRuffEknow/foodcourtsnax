@@ -74,6 +74,23 @@
                 linear-gradient(45deg, #005697 10px, transparent 0);
             background-size: 20px 20px;
         }
+        .qty-badge {
+            position: absolute;
+            top: -0.75rem;
+            left: -0.75rem;
+            background: #E31837;
+            color: #fff;
+            font-family: 'Oswald', Impact, sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            line-height: 1;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            z-index: 20;
+            pointer-events: none;
+            border: 2px solid #fff;
+            box-shadow: 2px 2px 0 rgba(0,0,0,.3);
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-display min-h-screen flex flex-col transition-colors duration-200">
@@ -113,6 +130,7 @@
                 <option value="items">ITEMS</option>
                 <option value="carbs">CARBS</option>
             </select>
+            <span id="optimizer-summary" class="hidden w-full text-center mt-2 font-bold text-primary dark:text-blue-400 font-price tracking-wide"></span>
             <p id="no-results" class="hidden w-full text-secondary dark:text-red-400 text-center mt-2 font-black uppercase">No items fit that budget!</p>
         </div>
 
@@ -597,74 +615,6 @@
             </div>
         </div>
     </footer>
-    <script>
-    (function () {
-        var budgetEl = document.getElementById('budget-select');
-        var dirEl = document.getElementById('direction-select');
-        var metricEl = document.getElementById('metric-select');
-        var grid = document.getElementById('menu-grid');
-        var noResults = document.getElementById('no-results');
-
-        for (var i = 1; i <= 100; i++) {
-            var opt = document.createElement('option');
-            opt.value = i;
-            opt.textContent = '$' + i;
-            budgetEl.appendChild(opt);
-        }
-
-        function filterAndSort() {
-            var budget = parseFloat(budgetEl.value);
-            var direction = dirEl.value;
-            var metric = metricEl.value;
-            var cards = Array.from(grid.children);
-
-            if (!budget || !direction || !metric) {
-                cards.forEach(function (c) { c.style.display = ''; });
-                noResults.classList.add('hidden');
-                return;
-            }
-
-            var visible = [];
-            var hidden = [];
-
-            cards.forEach(function (card) {
-                var price = parseFloat(card.dataset.price);
-                if (price > budget) {
-                    card.style.display = 'none';
-                    hidden.push(card);
-                } else {
-                    card.style.display = '';
-                    visible.push(card);
-                }
-            });
-
-            noResults.classList.toggle('hidden', visible.length > 0);
-
-            visible.sort(function (a, b) {
-                var pa = parseFloat(a.dataset.price);
-                var pb = parseFloat(b.dataset.price);
-                var va, vb;
-
-                if (metric === 'items') {
-                    va = Math.floor(budget / pa);
-                    vb = Math.floor(budget / pb);
-                } else {
-                    va = parseFloat(a.dataset[metric]) / pa;
-                    vb = parseFloat(b.dataset[metric]) / pb;
-                }
-
-                return direction === 'most' ? vb - va : va - vb;
-            });
-
-            visible.concat(hidden).forEach(function (card) {
-                grid.appendChild(card);
-            });
-        }
-
-        budgetEl.addEventListener('change', filterAndSort);
-        dirEl.addEventListener('change', filterAndSort);
-        metricEl.addEventListener('change', filterAndSort);
-    })();
-    </script>
+    <script src="optimizer.js"></script>
 </body>
 </html>
