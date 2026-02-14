@@ -92,17 +92,33 @@
                 <div class="w-full h-2 bg-primary dark:bg-blue-400 mt-2"></div>
                 <div class="w-full h-1 bg-primary dark:bg-blue-400 mt-1"></div>
             </div>
-            <h1 class="text-4xl md:text-5xl font-black text-primary dark:text-blue-400 uppercase tracking-tight mb-2 drop-shadow-sm mt-4">
-                Legendary Combos
-            </h1>
-            <p class="text-lg text-gray-600 dark:text-gray-400 font-bold max-w-2xl mx-auto border-b-2 border-secondary pb-4 inline-block">
-                The flavors you remember, now in high definition.
-            </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div id="budget-bar" class="mb-10 border-4 border-primary dark:border-blue-500 bg-card-light dark:bg-card-dark shadow-retro rounded-lg p-4 sm:p-6 flex flex-wrap items-center justify-center gap-3 text-lg font-bold text-text-light dark:text-text-dark">
+            <span>I have</span>
+            <select id="budget-select" class="border-4 border-primary dark:border-blue-500 bg-white dark:bg-gray-800 text-primary dark:text-blue-400 font-price text-xl pl-3 pr-8 py-1 rounded shadow-retro cursor-pointer focus:outline-none focus:ring-2 focus:ring-secondary">
+                <option value="">$--</option>
+            </select>
+            <span>and want the</span>
+            <select id="direction-select" class="border-4 border-primary dark:border-blue-500 bg-white dark:bg-gray-800 text-primary dark:text-blue-400 font-price text-xl pl-3 pr-8 py-1 rounded shadow-retro cursor-pointer focus:outline-none focus:ring-2 focus:ring-secondary">
+                <option value="">---</option>
+                <option value="most">MOST</option>
+                <option value="least">LEAST</option>
+            </select>
+            <span>amount of</span>
+            <select id="metric-select" class="border-4 border-primary dark:border-blue-500 bg-white dark:bg-gray-800 text-primary dark:text-blue-400 font-price text-xl pl-3 pr-8 py-1 rounded shadow-retro cursor-pointer focus:outline-none focus:ring-2 focus:ring-secondary">
+                <option value="">------</option>
+                <option value="protein">PROTEIN</option>
+                <option value="calories">CALORIES</option>
+                <option value="items">ITEMS</option>
+                <option value="carbs">CARBS</option>
+            </select>
+            <p id="no-results" class="hidden w-full text-secondary dark:text-red-400 text-center mt-2 font-black uppercase">No items fit that budget!</p>
+        </div>
+
+        <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             <!-- 1/4 lb Plus Dog -->
-            <div class="group h-96 perspective-1000 cursor-pointer">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="1.50" data-calories="570" data-protein="24" data-carbs="0">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white">
@@ -153,7 +169,7 @@
             </div>
 
             <!-- Giant Slice -->
-            <div class="group h-96 perspective-1000 cursor-pointer">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="1.99" data-calories="700" data-protein="44" data-carbs="0">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white">
@@ -204,7 +220,7 @@
             </div>
 
             <!-- Chicken Bake -->
-            <div class="group h-96 perspective-1000 cursor-pointer">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="2.99" data-calories="770" data-protein="36" data-carbs="0">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white">
@@ -255,7 +271,7 @@
             </div>
 
             <!-- Twisted Churro -->
-            <div class="group h-96 perspective-1000 cursor-pointer">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="1.00" data-calories="570" data-protein="0" data-carbs="50">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white">
@@ -306,7 +322,7 @@
             </div>
 
             <!-- Berry Sundae -->
-            <div class="group h-96 perspective-1000 cursor-pointer">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="2.49" data-calories="480" data-protein="0" data-carbs="0">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white">
@@ -357,7 +373,7 @@
             </div>
 
             <!-- 20oz Soda -->
-            <div class="group h-96 perspective-1000 cursor-pointer">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="0.69" data-calories="240" data-protein="0" data-carbs="0">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white">
@@ -408,7 +424,7 @@
             </div>
 
             <!-- Smoothie -->
-            <div class="group h-96 perspective-1000 cursor-pointer">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="2.99" data-calories="320" data-protein="8" data-carbs="0">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white flex items-center justify-center">
@@ -459,7 +475,7 @@
             </div>
 
             <!-- Choc Chip Cookie -->
-            <div class="group h-96 perspective-1000 cursor-pointer">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="1.00" data-calories="750" data-protein="0" data-carbs="90">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white flex items-center justify-center">
@@ -510,7 +526,7 @@
             </div>
 
             <!-- Caesar Salad -->
-            <div class="group h-96 perspective-1000 cursor-pointer">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="3.99" data-calories="650" data-protein="38" data-carbs="0">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white flex items-center justify-center">
@@ -581,5 +597,74 @@
             </div>
         </div>
     </footer>
+    <script>
+    (function () {
+        var budgetEl = document.getElementById('budget-select');
+        var dirEl = document.getElementById('direction-select');
+        var metricEl = document.getElementById('metric-select');
+        var grid = document.getElementById('menu-grid');
+        var noResults = document.getElementById('no-results');
+
+        for (var i = 1; i <= 100; i++) {
+            var opt = document.createElement('option');
+            opt.value = i;
+            opt.textContent = '$' + i;
+            budgetEl.appendChild(opt);
+        }
+
+        function filterAndSort() {
+            var budget = parseFloat(budgetEl.value);
+            var direction = dirEl.value;
+            var metric = metricEl.value;
+            var cards = Array.from(grid.children);
+
+            if (!budget || !direction || !metric) {
+                cards.forEach(function (c) { c.style.display = ''; });
+                noResults.classList.add('hidden');
+                return;
+            }
+
+            var visible = [];
+            var hidden = [];
+
+            cards.forEach(function (card) {
+                var price = parseFloat(card.dataset.price);
+                if (price > budget) {
+                    card.style.display = 'none';
+                    hidden.push(card);
+                } else {
+                    card.style.display = '';
+                    visible.push(card);
+                }
+            });
+
+            noResults.classList.toggle('hidden', visible.length > 0);
+
+            visible.sort(function (a, b) {
+                var pa = parseFloat(a.dataset.price);
+                var pb = parseFloat(b.dataset.price);
+                var va, vb;
+
+                if (metric === 'items') {
+                    va = Math.floor(budget / pa);
+                    vb = Math.floor(budget / pb);
+                } else {
+                    va = parseFloat(a.dataset[metric]) / pa;
+                    vb = parseFloat(b.dataset[metric]) / pb;
+                }
+
+                return direction === 'most' ? vb - va : va - vb;
+            });
+
+            visible.concat(hidden).forEach(function (card) {
+                grid.appendChild(card);
+            });
+        }
+
+        budgetEl.addEventListener('change', filterAndSort);
+        dirEl.addEventListener('change', filterAndSort);
+        metricEl.addEventListener('change', filterAndSort);
+    })();
+    </script>
 </body>
 </html>
