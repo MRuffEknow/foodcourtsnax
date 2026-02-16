@@ -146,7 +146,7 @@
                 </label>
                 <label class="flex items-center gap-1.5 cursor-pointer">
                     <input type="radio" name="diet" value="glizzygarian" class="accent-secondary w-4 h-4 cursor-pointer"/>
-                    <span class="font-bold text-sm uppercase">Glizzagarian</span>
+                    <span class="font-bold text-sm uppercase">Glizzygarian</span>
                 </label>
             </div>
             <span id="optimizer-summary" class="hidden w-full text-center mt-2 font-bold text-primary dark:text-blue-400 font-price tracking-wide"></span>
@@ -627,10 +627,15 @@
                 </div>
                 <span class="rotating-hotdog ml-6">🌭</span>
             </div>
-            <h5 class="text-white font-black uppercase text-lg mb-4">Get Updates</h5>
-            <div class="flex w-full max-w-md">
-                <input class="px-4 py-2 rounded-l text-gray-900 w-full focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Email Address" type="email"/>
-                <button class="bg-secondary px-4 py-2 rounded-r font-bold uppercase hover:bg-red-700 transition">Join</button>
+            <div class="relative text-center">
+                <h5 class="text-white font-black uppercase text-lg mb-4">Get Updates</h5>
+                <div class="flex w-full max-w-md">
+                    <input class="px-4 py-2 rounded-l text-gray-900 w-full focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Email Address" type="email"/>
+                    <button onclick="var msgs=['Seriously? You\'ll put your email in anything eh?','Nice try. We don\'t even have a backend.','Your email has been sold to 47 hot dog vendors.','Error 404: Bun not found.','How could you possibly want more email?'];var t=document.getElementById('email-toast');t.textContent=msgs[Math.floor(Math.random()*msgs.length)];t.classList.remove('hidden');clearTimeout(window._toastTimer);window._toastTimer=setTimeout(function(){t.classList.add('hidden')},4000)" class="bg-secondary px-4 py-2 rounded-r font-bold uppercase hover:bg-red-700 transition">Submit</button>
+                </div>
+                <div id="email-toast" class="hidden absolute inset-0 flex items-center justify-center bg-white text-primary font-black text-sm px-4 py-3 rounded shadow-retro border-2 border-secondary uppercase tracking-wide">
+                    Seriously? You'll put your email in anything eh?
+                </div>
             </div>
         </div>
     </footer>
