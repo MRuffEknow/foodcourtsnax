@@ -99,7 +99,7 @@
     </div>
 
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-        <div class="text-center mb-16 flex flex-col items-center">
+        <div class="text-center mb-8 flex flex-col items-center">
             <div class="flex flex-col leading-none select-none cursor-pointer mb-6 scale-125">
                 <div class="flex items-baseline">
                     <span class="text-secondary dark:text-red-500 font-black text-5xl italic tracking-tighter transform -skew-x-12">Food</span>
@@ -130,13 +130,32 @@
                 <option value="items">ITEMS</option>
                 <option value="carbs">CARBS</option>
             </select>
+            <div class="w-full flex flex-wrap items-center justify-center gap-4 mt-3 pt-3 border-t-2 border-primary/20 dark:border-blue-500/20">
+                <span class="font-bold text-sm uppercase tracking-wide">Diet:</span>
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                    <input type="radio" name="diet" value="" checked class="accent-primary w-4 h-4 cursor-pointer"/>
+                    <span class="font-bold text-sm uppercase">All</span>
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                    <input type="radio" name="diet" value="vegetarian" class="accent-primary w-4 h-4 cursor-pointer"/>
+                    <span class="font-bold text-sm uppercase">Vegetarian</span>
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                    <input type="radio" name="diet" value="vegan" class="accent-primary w-4 h-4 cursor-pointer"/>
+                    <span class="font-bold text-sm uppercase">Vegan</span>
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                    <input type="radio" name="diet" value="glizzygarian" class="accent-secondary w-4 h-4 cursor-pointer"/>
+                    <span class="font-bold text-sm uppercase">Glizzagarian</span>
+                </label>
+            </div>
             <span id="optimizer-summary" class="hidden w-full text-center mt-2 font-bold text-primary dark:text-blue-400 font-price tracking-wide"></span>
             <p id="no-results" class="hidden w-full text-secondary dark:text-red-400 text-center mt-2 font-black uppercase">No items fit that budget!</p>
         </div>
 
         <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             <!-- 1/4 lb Plus Dog -->
-            <div class="group h-96 perspective-1000 cursor-pointer" data-price="1.50" data-calories="570" data-protein="24" data-carbs="0">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="1.50" data-calories="570" data-protein="24" data-carbs="0" data-diet="" data-hotdog="true">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white">
@@ -187,7 +206,7 @@
             </div>
 
             <!-- Giant Slice -->
-            <div class="group h-96 perspective-1000 cursor-pointer" data-price="1.99" data-calories="700" data-protein="44" data-carbs="0">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="1.99" data-calories="700" data-protein="44" data-carbs="0" data-diet="vegetarian">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white">
@@ -238,7 +257,7 @@
             </div>
 
             <!-- Chicken Bake -->
-            <div class="group h-96 perspective-1000 cursor-pointer" data-price="2.99" data-calories="770" data-protein="36" data-carbs="0">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="2.99" data-calories="770" data-protein="36" data-carbs="0" data-diet="">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white">
@@ -289,7 +308,7 @@
             </div>
 
             <!-- Twisted Churro -->
-            <div class="group h-96 perspective-1000 cursor-pointer" data-price="1.00" data-calories="570" data-protein="0" data-carbs="50">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="1.00" data-calories="570" data-protein="0" data-carbs="50" data-diet="vegetarian,vegan">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white">
@@ -340,7 +359,7 @@
             </div>
 
             <!-- Berry Sundae -->
-            <div class="group h-96 perspective-1000 cursor-pointer" data-price="2.49" data-calories="480" data-protein="0" data-carbs="0">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="2.49" data-calories="480" data-protein="0" data-carbs="0" data-diet="vegetarian">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white">
@@ -391,7 +410,7 @@
             </div>
 
             <!-- 20oz Soda -->
-            <div class="group h-96 perspective-1000 cursor-pointer" data-price="0.69" data-calories="240" data-protein="0" data-carbs="0">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="0.69" data-calories="240" data-protein="0" data-carbs="0" data-diet="vegetarian,vegan">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white">
@@ -442,7 +461,7 @@
             </div>
 
             <!-- Smoothie -->
-            <div class="group h-96 perspective-1000 cursor-pointer" data-price="2.99" data-calories="320" data-protein="8" data-carbs="0">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="2.99" data-calories="320" data-protein="8" data-carbs="0" data-diet="vegetarian">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white flex items-center justify-center">
@@ -493,7 +512,7 @@
             </div>
 
             <!-- Choc Chip Cookie -->
-            <div class="group h-96 perspective-1000 cursor-pointer" data-price="1.00" data-calories="750" data-protein="0" data-carbs="90">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="1.00" data-calories="750" data-protein="0" data-carbs="90" data-diet="vegetarian">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white flex items-center justify-center">
@@ -544,7 +563,7 @@
             </div>
 
             <!-- Caesar Salad -->
-            <div class="group h-96 perspective-1000 cursor-pointer" data-price="3.99" data-calories="650" data-protein="38" data-carbs="0">
+            <div class="group h-96 perspective-1000 cursor-pointer" data-price="3.99" data-calories="650" data-protein="38" data-carbs="0" data-diet="">
                 <div class="flip-card-inner relative shadow-retro hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <div class="flip-card-front bg-card-light dark:bg-card-dark border-4 border-primary dark:border-blue-500 rounded-lg flex flex-col overflow-hidden">
                         <div class="h-56 overflow-hidden relative bg-white flex items-center justify-center">
