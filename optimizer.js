@@ -135,6 +135,14 @@
         var metric    = metricEl.value;
         var diet      = getSelectedDiet();
 
+        // Easter egg: $1 + any direction + nutrition metric
+        if (budget === 1 && (direction === 'most' || direction === 'least') &&
+                (metric === 'calories' || metric === 'protein' || metric === 'carbs')) {
+            brokeBallModal.classList.remove('hidden');
+            brokeBallClose.focus();
+            return;
+        }
+
         // Remove any existing qty badges
         grid.querySelectorAll('.qty-badge').forEach(function (b) { b.remove(); });
 
@@ -224,6 +232,16 @@
             ' | Total $' + spent +
             ' | $' + remaining + ' remaining';
         summaryEl.classList.remove('hidden');
+    }
+
+    // Easter egg: broke baller ($1 + nutrition metric)
+    var brokeBallModal  = document.getElementById('broke-baller-modal');
+    var brokeBallClose  = document.getElementById('broke-baller-close');
+    if (brokeBallClose) {
+        brokeBallClose.addEventListener('click', function () {
+            brokeBallModal.classList.add('hidden');
+            window.resetOptimizer();
+        });
     }
 
     // Easter egg: $100 bill rejected
