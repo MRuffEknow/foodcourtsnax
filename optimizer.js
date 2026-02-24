@@ -232,4 +232,13 @@
     dietRadios.forEach(function (radio) {
         radio.addEventListener('change', optimize);
     });
+
+    window.resetOptimizer = function () {
+        budgetEl.value = '';
+        dirEl.value = '';
+        metricEl.value = '';
+        var allRadio = document.querySelector('input[name="diet"][value=""]');
+        if (allRadio) allRadio.checked = true;
+        optimize();
+    };
 })();
