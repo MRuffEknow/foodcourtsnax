@@ -226,7 +226,24 @@
         summaryEl.classList.remove('hidden');
     }
 
-    budgetEl.addEventListener('change', optimize);
+    // Easter egg: $100 bill rejected
+    var bigBillModal = document.getElementById('big-bill-modal');
+    var bigBillClose = document.getElementById('big-bill-close');
+    if (bigBillClose) {
+        bigBillClose.addEventListener('click', function () {
+            bigBillModal.classList.add('hidden');
+            window.resetOptimizer();
+        });
+    }
+
+    budgetEl.addEventListener('change', function () {
+        if (budgetEl.value === '100') {
+            bigBillModal.classList.remove('hidden');
+            bigBillClose.focus();
+            return;
+        }
+        optimize();
+    });
     dirEl.addEventListener('change', optimize);
     metricEl.addEventListener('change', optimize);
     dietRadios.forEach(function (radio) {

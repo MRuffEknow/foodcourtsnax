@@ -1555,6 +1555,16 @@
         </div>
     </footer>
 
+    <!-- Big Bill Modal (easter egg) -->
+    <div id="big-bill-modal" role="alertdialog" aria-modal="true" aria-labelledby="big-bill-title" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60">
+        <div class="bg-white dark:bg-gray-900 border-4 border-secondary dark:border-red-500 shadow-retro rounded-lg max-w-sm w-full p-8 relative text-center">
+            <div class="text-6xl mb-4">🚫💵</div>
+            <h2 id="big-bill-title" class="text-2xl font-black text-secondary dark:text-red-400 uppercase mb-3">Whoa There, Big Spender</h2>
+            <p class="text-gray-700 dark:text-gray-300 font-bold text-lg mb-6">Sorry, we don't accept bills greater than $20.</p>
+            <button id="big-bill-close" class="bg-secondary text-white font-black uppercase px-6 py-2 rounded shadow-retro hover:bg-red-700 transition-colors">Got It</button>
+        </div>
+    </div>
+
     <!-- About Modal -->
     <div id="about-modal" role="dialog" aria-modal="true" aria-labelledby="about-modal-title" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60" onclick="if(event.target===this)this.classList.add('hidden')">
         <div class="bg-white dark:bg-gray-900 border-4 border-primary dark:border-blue-500 shadow-retro rounded-lg max-w-md w-full p-8 relative">
@@ -1576,10 +1586,15 @@
                 card.classList.toggle('flipped');
             });
         });
-        // Escape key closes the About modal
+        // Escape key closes modals
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 document.getElementById('about-modal').classList.add('hidden');
+                var bbm = document.getElementById('big-bill-modal');
+                if (!bbm.classList.contains('hidden')) {
+                    bbm.classList.add('hidden');
+                    window.resetOptimizer && window.resetOptimizer();
+                }
             }
         });
     </script>
