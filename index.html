@@ -45,7 +45,11 @@
             transition: transform 0.6s;
             transform-style: preserve-3d;
         }
-        .group:hover .flip-card-inner,
+        @media (hover: hover) {
+            .group:hover .flip-card-inner {
+                transform: rotateY(180deg);
+            }
+        }
         .group.flipped .flip-card-inner {
             transform: rotateY(180deg);
         }
