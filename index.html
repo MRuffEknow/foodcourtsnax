@@ -131,7 +131,12 @@
             </div>
         </div>
 
-        <div id="budget-bar" class="mb-10 border-4 border-primary dark:border-blue-500 bg-card-light dark:bg-card-dark shadow-retro rounded-lg p-4 sm:p-6 flex flex-wrap items-center justify-center gap-3 text-lg font-bold text-text-light dark:text-text-dark">
+        <details class="mb-10 border-4 border-primary dark:border-blue-500 bg-card-light dark:bg-card-dark shadow-retro rounded-lg group/details">
+            <summary class="flex items-center justify-between gap-3 px-4 sm:px-6 py-4 cursor-pointer list-none select-none font-black uppercase tracking-widest text-primary dark:text-blue-400 text-lg hover:bg-primary/5 dark:hover:bg-blue-500/10 rounded-lg transition-colors">
+                <span>Menu Order Optimizer</span>
+                <span class="material-symbols-outlined text-2xl transition-transform duration-300 group-open/details:rotate-180" aria-hidden="true">expand_more</span>
+            </summary>
+        <div id="budget-bar" class="border-t-4 border-primary dark:border-blue-500 p-4 sm:p-6 flex flex-wrap items-center justify-center gap-3 text-lg font-bold text-text-light dark:text-text-dark">
             <span>I have</span>
             <select id="budget-select" aria-label="Budget amount" class="border-4 border-primary dark:border-blue-500 bg-white dark:bg-gray-800 text-primary dark:text-blue-400 font-price text-xl pl-3 pr-8 py-2 rounded shadow-retro cursor-pointer focus:outline-none focus:ring-2 focus:ring-secondary">
                 <option value="">$--</option>
@@ -173,6 +178,7 @@
             <span id="optimizer-summary" class="hidden w-full text-center mt-2 font-bold text-primary dark:text-blue-400 font-price tracking-wide"></span>
             <p id="no-results" class="hidden w-full text-secondary dark:text-red-400 text-center mt-2 font-black uppercase">No items fit that budget!</p>
         </div>
+        </details>
 
         <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             <!-- 1/4 lb Plus Dog -->
