@@ -2,6 +2,8 @@
     var budgetEl  = document.getElementById('budget-select');
     var dirEl     = document.getElementById('direction-select');
     var metricEl  = document.getElementById('metric-select');
+    var dir2El    = document.getElementById('direction2-select');
+    var metric2El = document.getElementById('metric2-select');
     var grid      = document.getElementById('menu-grid');
     var noResults = document.getElementById('no-results');
     var summaryEl = document.getElementById('optimizer-summary');
@@ -129,10 +131,79 @@
         return counts;
     }
 
+    /**
+     * Lexicographic bi-objective knapsack (unbounded).
+     * Maximizes the primary metric first, then uses the secondary metric as a
+     * tiebreaker (dir2 = 'fewest' → minimize; dir2 = 'most' → maximize).
+     * Only applies when direction is 'most'.
+     */
+    function solveKnapsackBiObjective(budgetCents, metric, dir2, metric2, diet) {
+        var W = budgetCents;
+
+        var filtered = [];
+        var indexMap = [];
+        for (var fi = 0; fi < items.length; fi++) {
+            if (itemMatchesDiet(items[fi], diet)) {
+                filtered.push(items[fi]);
+                indexMap.push(fi);
+            }
+        }
+
+        var n = filtered.length;
+        var counts = new Array(items.length).fill(0);
+        if (n === 0) return counts;
+
+        // dp[w] = { prim: max primary metric, sec: best secondary at that primary }
+        // Baseline: buy nothing → both metrics = 0
+        var dp = [];
+        for (var w0 = 0; w0 <= W; w0++) {
+            dp.push({ prim: 0, sec: 0 });
+        }
+
+        var choice = new Int32Array(W + 1).fill(-1);
+
+        for (var w = 0; w <= W; w++) {
+            for (var i = 0; i < n; i++) {
+                var c = filtered[i].cents;
+                if (c > w) continue;
+                var v  = metricValue(filtered[i], metric);
+                var v2 = metricValue(filtered[i], metric2);
+                if (v <= 0) continue;
+
+                var newPrim = dp[w - c].prim + v;
+                var newSec  = dp[w - c].sec  + v2;
+
+                var better = false;
+                if (newPrim > dp[w].prim) {
+                    better = true;
+                } else if (newPrim === dp[w].prim && dp[w].prim > 0) {
+                    if (dir2 === 'fewest' && newSec < dp[w].sec) better = true;
+                    else if (dir2 === 'most' && newSec > dp[w].sec) better = true;
+                }
+
+                if (better) {
+                    dp[w].prim = newPrim;
+                    dp[w].sec  = newSec;
+                    choice[w]  = i;
+                }
+            }
+        }
+
+        var cap = W;
+        while (cap > 0 && choice[cap] !== -1) {
+            counts[indexMap[choice[cap]]]++;
+            cap -= filtered[choice[cap]].cents;
+        }
+
+        return counts;
+    }
+
     function optimize() {
         var budget    = parseFloat(budgetEl.value);
         var direction = dirEl.value;
         var metric    = metricEl.value;
+        var dir2      = dir2El.value;
+        var metric2   = metric2El.value;
         var diet      = getSelectedDiet();
 
         // Easter egg: $1 + any direction + nutrition metric
@@ -179,7 +250,10 @@
 
         noResults.textContent = 'No items fit that budget!';
         var budgetCents = Math.round(budget * 100);
-        var counts = solveKnapsack(budgetCents, metric, direction, diet);
+        var useBiObjective = direction === 'most' && dir2 && metric2;
+        var counts = useBiObjective
+            ? solveKnapsackBiObjective(budgetCents, metric, dir2, metric2, diet)
+            : solveKnapsack(budgetCents, metric, direction, diet);
 
         var totalCount = counts.reduce(function (a, b) { return a + b; }, 0);
 
@@ -193,10 +267,11 @@
 
         noResults.classList.add('hidden');
 
-        var totalCents    = 0;
-        var totalMetric   = 0;
-        var selectedCards = [];
-        var hiddenCards   = [];
+        var totalCents     = 0;
+        var totalMetric    = 0;
+        var totalSecondary = 0;
+        var selectedCards  = [];
+        var hiddenCards    = [];
 
         items.forEach(function (item, i) {
             if (counts[i] > 0) {
@@ -208,8 +283,9 @@
                 badge.textContent = 'x' + counts[i];
                 item.el.prepend(badge);
 
-                totalCents  += counts[i] * item.cents;
-                totalMetric += counts[i] * metricValue(item, metric);
+                totalCents     += counts[i] * item.cents;
+                totalMetric    += counts[i] * metricValue(item, metric);
+                if (useBiObjective) totalSecondary += counts[i] * metricValue(item, metric2);
                 selectedCards.push(item.el);
             } else {
                 item.el.style.display = 'none';
@@ -227,8 +303,15 @@
         var metricUnit  = metric === 'calories' ? ' cal' : (metric === 'items' ? '' : 'g');
         var metricDisp  = totalMetric + metricUnit + ' ' + metricLabel;
 
+        var secondaryDisp = '';
+        if (useBiObjective) {
+            var sec2Unit  = metric2 === 'calories' ? ' cal' : (metric2 === 'items' ? '' : 'g');
+            secondaryDisp = ' | ' + totalSecondary + sec2Unit + ' ' + metric2;
+        }
+
         summaryEl.textContent = '— ' + totalCount + ' item' + (totalCount !== 1 ? 's' : '') +
             ' | ' + metricDisp +
+            secondaryDisp +
             ' | Total $' + spent +
             ' | $' + remaining + ' remaining';
         summaryEl.classList.remove('hidden');
@@ -264,14 +347,18 @@
     });
     dirEl.addEventListener('change', optimize);
     metricEl.addEventListener('change', optimize);
+    dir2El.addEventListener('change', optimize);
+    metric2El.addEventListener('change', optimize);
     dietRadios.forEach(function (radio) {
         radio.addEventListener('change', optimize);
     });
 
     window.resetOptimizer = function () {
-        budgetEl.value = '';
-        dirEl.value = '';
-        metricEl.value = '';
+        budgetEl.value  = '';
+        dirEl.value     = '';
+        metricEl.value  = '';
+        dir2El.value    = '';
+        metric2El.value = '';
         var allRadio = document.querySelector('input[name="diet"][value=""]');
         if (allRadio) allRadio.checked = true;
         optimize();
