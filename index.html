@@ -195,6 +195,14 @@
                             <div>
                                 <h3 class="text-3xl font-black text-primary dark:text-blue-400 uppercase leading-none mb-2">1/4 lb Plus Dog</h3>
                                 <p class="text-gray-600 dark:text-gray-400 font-medium">All beef hot dog with 20oz soda (refillable)</p>
+                                <div class="flex gap-4 mt-3" onclick="event.stopPropagation()">
+                                    <label class="flex items-center gap-1.5 cursor-pointer text-sm font-bold text-gray-700 dark:text-gray-300 select-none">
+                                        <input type="radio" name="hotdog-option" value="combo" checked class="accent-[#005697]" onchange="toggleHotdogNutrition('combo')"> Combo
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer text-sm font-bold text-secondary dark:text-red-400 select-none">
+                                        <input type="radio" name="hotdog-option" value="dog-only" class="accent-[#E31837]" onchange="toggleHotdogNutrition('dog-only')"> 🌭 Dog Only
+                                    </label>
+                                </div>
                             </div>
                             <div class="flex items-center text-secondary dark:text-red-400 font-bold uppercase text-sm mt-4">
                                 <span class="material-symbols-outlined text-base mr-1">touch_app</span> Flip for Nutrition
@@ -203,7 +211,8 @@
                     </div>
                     <div class="flip-card-back bg-white dark:bg-gray-800 border-4 border-secondary dark:border-red-500 rounded-lg px-4 py-3 flex flex-col justify-center text-left">
                         <h4 class="text-lg font-black text-black dark:text-white uppercase border-b-4 border-black dark:border-white pb-1 mb-2">Nutrition Facts</h4>
-                        <div class="space-y-0 font-mono text-xs dark:text-gray-300">
+                        <!-- Combo nutrition -->
+                        <div id="hotdog-nutrition-combo" class="space-y-0 font-mono text-xs dark:text-gray-300">
                             <div class="flex justify-between border-b border-gray-300 dark:border-gray-600 pb-1">
                                 <span class="font-bold">Serving Size</span>
                                 <span>1 Combo</span>
@@ -249,8 +258,58 @@
                                 <span>23g</span>
                             </div>
                         </div>
-                        <div class="mt-2 text-center">
+                        <!-- Dog Only nutrition -->
+                        <div id="hotdog-nutrition-dog-only" class="hidden space-y-0 font-mono text-xs dark:text-gray-300">
+                            <div class="flex justify-between border-b border-gray-300 dark:border-gray-600 pb-1">
+                                <span class="font-bold">Serving Size</span>
+                                <span>1 Dog</span>
+                            </div>
+                            <div class="flex justify-between border-b-4 border-black dark:border-white pb-1">
+                                <span class="font-bold">Calories</span>
+                                <span class="font-bold">310</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-300 dark:border-gray-600 pb-1">
+                                <span class="font-bold">Total Fat</span>
+                                <span>28g</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-300 dark:border-gray-600 pb-1 pl-4">
+                                <span>Saturated Fat</span>
+                                <span>11g</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-300 dark:border-gray-600 pb-1 pl-4">
+                                <span>Trans Fat</span>
+                                <span>1.5g</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-300 dark:border-gray-600 pb-1">
+                                <span class="font-bold">Cholesterol</span>
+                                <span>65mg</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-300 dark:border-gray-600 pb-1">
+                                <span class="font-bold">Sodium</span>
+                                <span>1050mg</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-300 dark:border-gray-600 pb-1">
+                                <span class="font-bold">Total Carbohydrate</span>
+                                <span>3g</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-300 dark:border-gray-600 pb-1 pl-4">
+                                <span>Dietary Fiber</span>
+                                <span>0g</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-300 dark:border-gray-600 pb-1 pl-4">
+                                <span>Total Sugars</span>
+                                <span>2g</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-300 dark:border-gray-600 pb-1">
+                                <span class="font-bold">Protein</span>
+                                <span>15g</span>
+                            </div>
+                        </div>
+                        <div id="hotdog-allergen-combo" class="mt-2 text-center">
                             <span class="inline-block bg-primary text-white text-xs font-bold px-2 py-1 rounded">CONTAINS WHEAT, SESAME, SOY</span>
+                        </div>
+                        <div id="hotdog-allergen-dog-only" class="hidden mt-2 text-center">
+                            <span class="inline-block bg-primary text-white text-xs font-bold px-2 py-1 rounded">CONTAINS SOY</span>
                         </div>
                     </div>
                 </div>
@@ -1676,6 +1735,14 @@
     </div>
 
     <script>
+        function toggleHotdogNutrition(option) {
+            var isCombo = option === 'combo';
+            document.getElementById('hotdog-nutrition-combo').classList.toggle('hidden', !isCombo);
+            document.getElementById('hotdog-nutrition-dog-only').classList.toggle('hidden', isCombo);
+            document.getElementById('hotdog-allergen-combo').classList.toggle('hidden', !isCombo);
+            document.getElementById('hotdog-allergen-dog-only').classList.toggle('hidden', isCombo);
+        }
+
         // Tap-to-flip for touch devices
         document.querySelectorAll('#menu-grid .group').forEach(function(card) {
             card.addEventListener('click', function() {
